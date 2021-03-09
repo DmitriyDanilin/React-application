@@ -20,3 +20,6 @@ h1{
   margin-left: 20px;
   border-radius: 10% ;
 }
+.captcha{
+  width: 250px;
+}

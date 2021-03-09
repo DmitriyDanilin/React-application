@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { savePhoto } from '../redux/profile-reducer';
 
 const axiosInstance = axios.create(
     {
@@ -29,13 +28,18 @@ export const usersAPI = {
 
 export const authAPI = {
     authMe() {
-        return axiosInstance.get(`auth/me`);
+        return axiosInstance.get(`/auth/me`);
     },
-    login(email, password, rememberMe = false) {
-        return axiosInstance.post(`auth/login`, { email, password, rememberMe });
+    login(email, password, rememberMe = false, captcha =null) {
+        return axiosInstance.post(`/auth/login`, { email, password, rememberMe, captcha });
     },
     logout() {
-        return axiosInstance.delete(`auth/login`);
+        return axiosInstance.delete(`/auth/login`);
+    }
+}
+export const securityAPI = {
+    getCaptcha(){
+        return axiosInstance.get(`/security/get-captcha-url`);
     }
 }
 
@@ -46,20 +50,20 @@ export const profileAPI = {
         return axiosInstance.get(`/profile/${userId}`)
     },
     getStatus(userId) {
-        return axiosInstance.get(`profile/status/` + userId);
+        return axiosInstance.get(`/profile/status/` + userId);
     },
     updateStatus(status) {
-        return axiosInstance.put(`profile/status`, { status: status });
+        return axiosInstance.put(`/profile/status`, { status: status });
     },
     savePhoto(photoFile){
         const formData = new FormData();
         formData.append("image", photoFile);
 
-        return axiosInstance.put(`profile/photo`, formData, {headers: 
+        return axiosInstance.put(`/profile/photo`, formData, {headers: 
             {"Content-Type": 'multipart/form-data'}} )
     },
     saveProfile(profile){
-        return axiosInstance.put(`profile`, profile);
+        return axiosInstance.put(`/profile`, profile);
     }
 }
 

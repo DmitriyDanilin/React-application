@@ -10,7 +10,7 @@ import { Redirect } from 'react-router-dom'
 
 const Login = (props) => {
     const onSubmit = (formData) => {
-        props.logIn(formData.email, formData.password, formData.rememberMe);
+        props.logIn(formData.email, formData.password, formData.rememberMe, formData.captcha);
     }
     if (props.isAuth) {
         return <Redirect to="/profile" />
@@ -18,13 +18,14 @@ const Login = (props) => {
     return (
         <div>
             <h1>Login Form</h1>
-            <LoginReduxForm onSubmit={onSubmit} />
+            <LoginReduxForm onSubmit={onSubmit}
+                captchaURL={props.captchaURL} />
         </div>
     )
 }
 
 
-const LoginForm = ({ handleSubmit, error }) => {
+const LoginForm = ({ handleSubmit, error, captchaURL }) => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
@@ -36,6 +37,8 @@ const LoginForm = ({ handleSubmit, error }) => {
             <div>
                 {CreateField(null, "rememberMe", [], "input", "checkbox", s.remember)}remember me
             </div>
+            {captchaURL && <img className={s.captcha} src={captchaURL}></img> }
+            {captchaURL &&  CreateField(null, "captcha", [required], Input)}
             { error && <div className={s.formSummaryError}>
                 {error}
             </div>}
@@ -48,7 +51,8 @@ const LoginForm = ({ handleSubmit, error }) => {
 
 const mapStateToProps = (state) => (
     {
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        captchaURL: state.auth.captchaURL
     }
 )
 

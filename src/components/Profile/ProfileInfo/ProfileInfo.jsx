@@ -15,8 +15,6 @@ const ProfileInfo = (props) => {
             setEditMode(false);
 
         })
-        
-
     }
     let [editMode, setEditMode] = useState(false);
     if (!props.profile) {
