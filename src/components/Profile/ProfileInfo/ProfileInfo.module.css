@@ -5,12 +5,13 @@ img{
     width: 600px;
 }
 .avatar{
-    width: 300px;
+    width: 350px;
     border-radius: 50%;
 }
 .profileName{
     font-size: xx-large;
     font-style: italic;
+    color: blue;
 }
 .status{
     margin-bottom: 20px;

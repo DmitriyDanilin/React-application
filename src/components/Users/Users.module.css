@@ -22,7 +22,7 @@
     height: 150px;
     width: 150px;
     margin: 5px;
-    border-radius: 50%;
+    border-radius: 35%;
     grid-area: i;
 }
 .userInfo{
@@ -30,13 +30,14 @@
     padding-left: 10px;
     padding-top: 10px;
     margin-bottom: 30px;
-    font-size: large;
 }
 .aboutUser{
     grid-area: a;
+    font-size: x-large;
 }
 .location{
     grid-area: l;
+    font-size: large;
 }
 .selectedPage{
 color: red ;

@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 import s from './Users.module.css'
-import userPhoto from 'D:\\Git Rep\\React-application\\src\\img\\36b78c8b7cd957e082f53148b74787ea.jpg'
+import userPhoto from 'D:\\Git Rep\\React-application\\src\\img\\UserPhoto.png'
 
 const User = ({ user, isFollowingInProgress,unfollow, follow }) => {
     return (

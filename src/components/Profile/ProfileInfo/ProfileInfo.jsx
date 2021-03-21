@@ -3,7 +3,7 @@ import Preloader from '../../Preloader/Preloader';
 import ProfileDataForm from './ProfileDataForm';
 import s from './ProfileInfo.module.css';
 import ProfileStatusWithHooks from './ProfileStatusWithHooks';
-import userPhoto from 'D:\\Git Rep\\React-application\\src\\img\\36b78c8b7cd957e082f53148b74787ea.jpg';
+import userPhoto from 'D:\\Git Rep\\React-application\\src\\img\\UserPhoto.png';
 
 const ProfileInfo = (props) => {
     const onAvatarSelected = (e) => {
@@ -25,9 +25,11 @@ const ProfileInfo = (props) => {
             <div>
                 <div className={s.descriptionBlock}>
                     <img className={s.avatar} src={props.profile.photos.large || userPhoto} ></img>
+
                     <div>{props.isOwner
                         ? <input type="file" onChange={onAvatarSelected} />
                         : ""}</div>
+
                     <div className={s.status}><ProfileStatusWithHooks status={props.status}
                         updateStatus={props.updateStatus} /></div>
                     {editMode ? <ProfileDataForm profile={props.profile} initialValues={props.profile} onSubmit={onSubmit} profile={props.profile} /> : <ProfileData
