@@ -8,9 +8,12 @@ const Header = (props) => {
             <img src='https://www.vectorlogo.zone/logos/telegram/telegram-tile.svg' />
         </NavLink>
         <span className={s.title}>FakeTelegram</span>
-        <div className={s.loginBlock}> <NavLink to="/login"> {props.isAuth 
-        ? <div>{props.login} <button onClick={props.logout}>Log Out</button></div>  
-        : 'Log In'}</NavLink></div>
+        <div className={s.loginBlock}>  {props.isAuth 
+        ? 
+        <div> <NavLink to="/login"><span>{props.login}</span></NavLink>  <NavLink to="/login">
+            <button onClick={props.logout}>Log Out</button></NavLink></div>  
+        : 
+        <span classNam={s.login}>Log In</span>}</div>
     </header>
 }
 

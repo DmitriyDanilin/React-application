@@ -1,6 +1,6 @@
 import React from 'react'
 import s from './Login.module.css'
-import { Field, reduxForm } from 'redux-form'
+import { reduxForm } from 'redux-form'
 import { CreateField, Input } from '../common/FormControls/FormControls'
 import required, { maxLengthCreator } from '../../Utilits/Validators/validators'
 import { connect } from 'react-redux'
