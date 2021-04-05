@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './Header.module.css';
 import { NavLink } from "react-router-dom";
+import { Button, Radio } from 'antd';
 
 const Header = (props) => {
     return <header className={s.header}>
@@ -11,7 +12,8 @@ const Header = (props) => {
         <div className={s.loginBlock}>  {props.isAuth 
         ? 
         <div> <NavLink to="/login"><span>{props.login}</span></NavLink>  <NavLink to="/login">
-            <button onClick={props.logout}>Log Out</button></NavLink></div>  
+            <Button onClick={props.logout} danger ={true} type="primary">Log Out</Button>
+            </NavLink></div>  
         : 
         <span classNam={s.login}>Log In</span>}</div>
     </header>
