@@ -1,3 +1,5 @@
+import { AppStateType } from "../redux/redux-store"
+
 export type PostType = {
     id: number
     message: string
@@ -34,3 +36,4 @@ export type UserType ={
     status: string
     photos: PhotosType
 }
+export type GetStateType  = () => AppStateType
