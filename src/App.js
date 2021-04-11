@@ -48,7 +48,7 @@ class App extends React.Component {
                             render={() => <ProfileContainer />} />
 
                         <Route path='/users'
-                            render={() => <UsersContainer />} />
+                            render={() => <UsersContainer pageTitle={"Users"}/>} />
                         <Route path='/login'
                             render={() => <Login />} />
                     </Switch>
