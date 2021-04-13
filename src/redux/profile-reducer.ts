@@ -116,10 +116,10 @@ export const setUserPhoto = (photo: PhotosType): SetUserPhotoActionType => ({ ty
 
 type ThunksType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
 
-export const getUserProfile = (userId: number|null):ThunksType => async (dispatch) => {
+export const getUserProfile = (userId: number | null):ThunksType => async (dispatch) => {
 
     let response = await usersAPI.getProfile(userId);
-    dispatch(setUserProfile(response.data));
+    dispatch(setUserProfile(response));
 }
 
 export const getStatus = (userId: number):ThunksType => async (dispatch) => {
@@ -131,7 +131,7 @@ export const updateStatus = (status: string):ThunksType => async (dispatch) => {
     try {
         let response = await profileAPI.updateStatus(status)
 
-        if (response.data.resultCode === 0) {
+        if (response.resultCode === 0) {
             dispatch(setUserStatusAC(status));
         }
     }
@@ -152,12 +152,12 @@ export const saveProfile = (profile: ProfileType):ThunksType => async (dispatch,
     const response = await profileAPI.saveProfile(profile)
     const userId = getState().auth.userID;
 
-    if (response.data.resultCode === 0) {
+    if (response.resultCode === 0) {
         dispatch(getUserProfile(userId));
     } else {
         //@ts-ignore
         dispatch(stopSubmit("edit-profile", { _error: response.data.messages[0] }));
-        return Promise.reject(response.data.messages[0]);
+        return Promise.reject(response.messages[0]);
     }
 }
 
