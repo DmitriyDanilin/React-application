@@ -117,14 +117,14 @@ export const setUserPhoto = (photo: PhotosType): SetUserPhotoActionType => ({ ty
 type ThunksType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
 
 export const getUserProfile = (userId: number | null):ThunksType => async (dispatch) => {
-
+    //@ts-ignore //TODO: FIX userId type
     let response = await usersAPI.getProfile(userId);
     dispatch(setUserProfile(response));
 }
 
 export const getStatus = (userId: number):ThunksType => async (dispatch) => {
     let response = await profileAPI.getStatus(userId);
-    dispatch(setUserStatusAC(response.data));
+    dispatch(setUserStatusAC(response));
 }
 
 export const updateStatus = (status: string):ThunksType => async (dispatch) => {
@@ -144,7 +144,7 @@ export const savePhoto = (file: any):ThunksType => async (dispatch) => {
     let response = await profileAPI.savePhoto(file)
 
     if (response.data.resultCode === 0) {
-        dispatch(setUserPhoto(response.data.data.photos));
+        dispatch(setUserPhoto(response.data.photos));
     }
 }
 

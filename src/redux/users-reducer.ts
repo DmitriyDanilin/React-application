@@ -1,6 +1,6 @@
 import { usersAPI } from "../API/api";
 import { updateObjectInArray } from "../Utilits/helpers/object-helper";
-import { GetStateType, UserType } from "../types/types"
+import { UserType } from "../types/types"
 import { AppStateType } from "./redux-store";
 import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
@@ -80,6 +80,11 @@ type setUsersActionType ={
     type: typeof SET_USERS
     users: Array<UserType>
 }
+type setUsersType = {
+    items: Array<UserType>
+    totalCount: number
+    error: null | string
+ }
 export const setUsers = (users: Array<UserType>): setUsersActionType => { return { type: SET_USERS, users } }
 
 type setCurrentPageActionType ={

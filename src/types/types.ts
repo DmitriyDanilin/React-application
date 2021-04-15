@@ -18,22 +18,24 @@ type ContactsType = {
 }
 
 export type PhotosType = {
-    small: string
-    large: string
+    small: string | null
+    large: string | null
 }
 
 export type ProfileType = {
-    userId: number
+    userId: number | null
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
     contacts: ContactsType
     photos: PhotosType
+    status: string
 }
 export type UserType ={
     id: number
     name: string
-    status: string
+    status?: string
     photos: PhotosType
+    followed: boolean
 }
 export type GetStateType  = () => AppStateType

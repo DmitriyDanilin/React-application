@@ -97,10 +97,10 @@ type saveProfileType ={
 }
 
 export const profileAPI = {
-    getProfile(userId: number | null) {
+    getProfile(userId: number| null) {
         return axiosInstance.get<ProfileType>(`/profile/${userId}`).then(res => res.data)
     },
-    getStatus(userId: number) {
+    getStatus(userId: number| null) {
         return axiosInstance.get<any>(`/profile/status/` + userId).then(res => res.data);//no types is API DOCS
     },
     updateStatus(status: string) {

@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { TextArea } from '../../common/FormControls/FormControls';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
-import required, { maxLengthCreator } from "D:\\Git Rep\\React-application\\src\\Utilits\\Validators\\validators.js"
+import required, { maxLengthCreator } from "D:\\Git Rep\\React-application\\src\\Utilits\\Validators\\validators.ts"
 
 const maxLenght = maxLengthCreator(1000);
 
