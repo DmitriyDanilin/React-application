@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { getUsersOnPageClick, toggleIsFollowing, follow, unfollow, getUsers } from '../../redux/users-reducer'
+import { getUsersOnPageClick, follow, unfollow, getUsers } from '../../redux/users-reducer'
 import Users from './Users'
 import React, { Component } from 'react'
 import Preloader from '../Preloader/Preloader'

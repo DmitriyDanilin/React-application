@@ -6,7 +6,6 @@ import required, { maxLengthCreator } from '../../Utilits/Validators/validators'
 import { connect } from 'react-redux'
 import { logIn } from '../../redux/auth-reduser'
 import { Redirect } from 'react-router-dom'
-import { Button, Radio } from 'antd';
 import { AppStateType } from '../../redux/redux-store'
 
 
