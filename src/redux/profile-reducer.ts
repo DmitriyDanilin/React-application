@@ -1,4 +1,5 @@
-import { profileAPI, usersAPI } from "../API/api";
+import { profileAPI } from "../API/profile-api";
+import { usersAPI } from "../API/users-api";
 import { stopSubmit } from "redux-form";
 import { PostType, ProfileType, PhotosType } from "../types/types"
 import { ThunkAction } from "redux-thunk";
@@ -79,11 +80,10 @@ export const actions = {
 
 //thunks
 
-type ThunksType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
+type ThunksType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType | ReturnType<typeof stopSubmit>>
 
 export const getUserProfile = (userId: number | null):ThunksType => async (dispatch) => {
-    //@ts-ignore 
-    let response = await usersAPI.getProfile(userId);
+    let response = await profileAPI.getProfile(userId);
     dispatch(actions.setUserProfile(response));
 }
 
@@ -105,10 +105,10 @@ export const updateStatus = (status: string):ThunksType => async (dispatch) => {
     }
 
 }
-export const savePhoto = (file: any):ThunksType => async (dispatch) => {
+export const savePhoto = (file: File):ThunksType => async (dispatch) => {
     let response = await profileAPI.savePhoto(file)
 
-    if (response.data.resultCode === 0) {
+    if (response.resultCode === 0) {
         dispatch(actions.setUserPhoto(response.data.photos));
     }
 }
@@ -118,10 +118,15 @@ export const saveProfile = (profile: ProfileType):ThunksType => async (dispatch,
     const userId = getState().auth.userID;
 
     if (response.resultCode === 0) {
-        dispatch(getUserProfile(userId));
+        if(userId === null) 
+        {
+            dispatch(getUserProfile(userId));
+        }
+        else{
+            throw new Error("User id is NULL!")
+        }
     } else {
-        //@ts-ignore
-        dispatch(stopSubmit("edit-profile", { _error: response.data.messages[0] }));
+        dispatch(stopSubmit("edit-profile", { _error: response.messages[0] }));
         return Promise.reject(response.messages[0]);
     }
 }

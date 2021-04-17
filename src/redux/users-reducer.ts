@@ -1,18 +1,9 @@
-import { usersAPI } from "../API/api";
+import { usersAPI } from "../API/users-api";
 import { updateObjectInArray } from "../Utilits/helpers/object-helper";
 import { UserType } from "../types/types"
 import { AppStateType, InferActionsTypes } from "./redux-store";
 import { Dispatch } from "redux";
 import { ThunkAction } from "redux-thunk";
-
-//const UNFOLLOW = 'UNFOLLOW';
-//const FOLLOW = 'FOLLOW';
-//const SET_USERS = 'SET_USERS';
-//const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
-//const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
-//const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
-//const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
-
 
 
 let initialState = {

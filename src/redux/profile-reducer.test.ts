@@ -1,20 +1,24 @@
-import profileReducer, { addPostActionCreator, deletePost } from "./profile-reducer";
+import { PostType, ProfileType } from "../types/types";
+import profileReducer, { actions } from "./profile-reducer";
 
 
 //test data
 let initialState = {
-    posts: [
-        { id: 1, message: 'Hi, how are you?', likesCount: 12 },
-        { id: 2, message: 'It\'s my first post', likesCount: 11 },
-        { id: 3, message: 'Blabla', likesCount: 11 },
-        { id: 4, message: 'Dada', likesCount: 11 }
-    ]
+  posts: [
+    { id: 1, message: 'Hi, how are you?', likesCount: 12 },
+    { id: 2, message: 'It\'s my first post', likesCount: 11 },
+    { id: 3, message: 'Blabla', likesCount: 11 },
+    { id: 4, message: 'Dada', likesCount: 11 }
+] as Array<PostType>, 
+status: "",
+profile: null as ProfileType | null
+
 };
 
 
 it('new Post should be added', () => {
     //action
-    let action = addPostActionCreator("Hello!")
+    let action = actions.addPostActionCreator("Hello!")
     let newState = profileReducer(initialState, action)
 
     //expectation
@@ -23,7 +27,7 @@ it('new Post should be added', () => {
   
 it('new Post should be added', () => {
     //action
-    let action = addPostActionCreator("Hello!")
+    let action = actions.addPostActionCreator("Hello!")
     let newState = profileReducer(initialState, action)
 
     //expectation
@@ -31,7 +35,7 @@ it('new Post should be added', () => {
   }); 
   it('delete post', () => {
     //action
-    let action = deletePost(1)
+    let action = actions.deletePost(1)
     let newState = profileReducer(initialState, action)
 
     //expectation

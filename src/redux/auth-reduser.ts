@@ -1,6 +1,7 @@
 import { stopSubmit } from "redux-form";
 import { ThunkAction } from "redux-thunk";
-import { authAPI, securityAPI } from "../API/api";
+import { securityAPI } from "../API/security-api";
+import { authAPI } from "../API/auth-api";
 import { AppStateType, InferActionsTypes } from "./redux-store";
 import {ResultCodeEnum} from "./../API/api"
 
@@ -43,9 +44,9 @@ export const actions ={
                 { userID, email, login, isAuth }
         }
     },
-    getCaptchaURLSuccess: (captcha: string) => {
+    getCaptchaURLSuccess: (captchaURL: string) => {
         return {
-            type: 'GET_CAPTCHA_URL_SUCCESS', payload: {captcha}
+            type: 'GET_CAPTCHA_URL_SUCCESS', payload: {captchaURL}
         }
     }
 
@@ -53,7 +54,7 @@ export const actions ={
 
 
 //thunks
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType | ReturnType<typeof stopSubmit>>
 
 export const getAuthUserData = ():ThunkType => async (dispatch) => {
     let response = await authAPI.authMe();
@@ -75,7 +76,6 @@ export const logIn = (email: string, password: string, rememberMe: boolean, capt
             dispatch(getCaptchaURL());
         }
         let message = response.messages.length > 0 ? response.messages[0] : "Some error"
-        //@ts-ignore
         dispatch(stopSubmit("Login", { _error: message }));
     }
 }
