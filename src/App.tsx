@@ -11,11 +11,15 @@ import { compose } from 'redux';
 import { initilizeApp } from './redux/app-reduser';
 import Preloader from './components/Preloader/Preloader';
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import { AppStateType } from './redux/redux-store';
 
+type MapPropsType = ReturnType<typeof mapStateToProps>
+type DispatchPropsType = {
+    initilizeApp: () => void
+}
 
-
-class App extends React.Component {
-    catchAllUnhandledErrors = (promiseRejectionEvent)=>{
+class App extends React.Component<MapPropsType & DispatchPropsType> {
+    catchAllUnhandledErrors = (e: PromiseRejectionEvent)=>{
         alert("Some error");
     }
     componentDidMount() {
@@ -48,7 +52,7 @@ class App extends React.Component {
                             render={() => <ProfileContainer />} />
 
                         <Route path='/users'
-                            render={() => <UsersContainer pageTitle={"Users"}/>} />
+                            render={() => <UsersContainer/>} />
                         <Route path='/login'
                             render={() => <Login />} />
                     </Switch>
@@ -58,10 +62,10 @@ class App extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType) => ({
     isInitialized: state.app.isInitialized
 })
-export default compose(
+export default compose<React.ComponentType>(
     withRouter,
     connect(mapStateToProps, { initilizeApp })
 )(App);

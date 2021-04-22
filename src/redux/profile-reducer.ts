@@ -118,13 +118,15 @@ export const saveProfile = (profile: ProfileType):ThunksType => async (dispatch,
     const userId = getState().auth.userID;
 
     if (response.resultCode === 0) {
-        if(userId === null) 
+        /*if(userId === null) 
         {
             dispatch(getUserProfile(userId));
         }
         else{
-            throw new Error("User id is NULL!")
-        }
+            //throw new Error("User id is NULL!")
+            dispatch(getUserProfile(userId));
+        }*/
+        dispatch(getUserProfile(userId));
     } else {
         dispatch(stopSubmit("edit-profile", { _error: response.messages[0] }));
         return Promise.reject(response.messages[0]);

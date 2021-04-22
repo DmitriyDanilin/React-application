@@ -1,8 +1,11 @@
 import React from 'react';
 import s from './Post.module.css';
 import userPhoto from 'D:\\Git Rep\\React-application\\src\\img\\36b78c8b7cd957e082f53148b74787ea.jpg';
-
-const Post = (props) => {
+type PropsType={
+  likesCount: number
+  message: string
+}
+const Post: React.FC<PropsType> = (props) => {
   const [likes, setLike] = React.useState(props.likesCount);
   const putLike = () => {
     if (likes == props.likesCount ) {

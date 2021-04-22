@@ -2,8 +2,16 @@ import React from 'react';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import { Redirect } from 'react-router-dom';
-
-const Profile = (props) => {
+import { ProfileType } from '../../types/types';
+type PropsType ={
+    profile: ProfileType | null
+    status: string
+    isOwner: boolean
+    updateStatus: (status: string) => void
+    saveProfile: (profile:ProfileType) => Promise<any>
+    savePhoto: (file: File) => void
+}
+const Profile: React.FC<PropsType> = (props) => {
     return (
         <div>
             <ProfileInfo
@@ -15,8 +23,7 @@ const Profile = (props) => {
             saveProfile ={props.saveProfile}/>
 
             
-            <MyPostsContainer 
-            profile={props.profile}/>
+            <MyPostsContainer />
         </div>
     )
 }

@@ -2,18 +2,25 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import { Field, reduxForm } from 'redux-form';
-import { TextArea } from '../common/FormControls/FormControls';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+import { CreateField, Input, TextArea } from '../common/FormControls/FormControls';
 import {required, maxLengthCreator } from '../../Utilits/Validators/validators';
+import { initialStateType } from '../../redux/dialogs-reducer';
 
-const Dialogs = (props) => {
+type PropsType ={
+    dialogsPage: initialStateType
+    sendMessage: (message: string) => void
+}
+
+
+const Dialogs: React.FC<PropsType> = (props) => {
 
     let state = props.dialogsPage;
 
     let dialogsElements = state.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id} />);
     let messagesElements = state.messages.map(m => <Message message={m.message} key={m.id} />);
 
-    let addNewMessageChange = (values) => {
+    let addNewMessageChange = (values : NewMessageBodyFormType) => {
         props.sendMessage(values.newMessageBody);
         values.newMessageBody ="";
     }
@@ -31,17 +38,24 @@ const Dialogs = (props) => {
     )
 }
 const maxLenght = maxLengthCreator(1000);
-const AddMessageForm = (props) => {
+
+const AddMessageForm: React.FC<InjectedFormProps<NewMessageBodyFormType>>= (props) => {
     return (
         <div>
             <form onSubmit={props.handleSubmit} className={s.textButtonArea}>
-                <Field validate={[required, maxLenght]} component={TextArea} name="newMessageBody" />
+                {CreateField<NewMessageBodyPropertiesType>("Message", "newMessageBody", [required, maxLenght], Input)}
                 <div><button>Send</button></div>
             </form>
         </div>
     )
 }
 
-const ReduxAddMessageForm = reduxForm({form: "sendMessage"})(AddMessageForm)
+type NewMessageBodyPropertiesType = Extract< keyof NewMessageBodyFormType, string> // type includes key of LoginFormType, to limim posible names of fields
+
+export type NewMessageBodyFormType = {
+    newMessageBody: string
+}
+
+const ReduxAddMessageForm = reduxForm<NewMessageBodyFormType>({form: "sendMessage"})(AddMessageForm)
 
 export default Dialogs;
