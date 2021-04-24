@@ -13,9 +13,9 @@ export const usersAPI = {
         return axiosInstance.get<getUsersType>(`/users?page=${currentPage}&count=${pageSize}`).then(response => { return response.data })
     },
     Follow(id: number) {
-        return axiosInstance.post<ResponseType>(`/follow/${id}`).then(response => { return response.data })
+        return axiosInstance.post<Promise<ResponseType>>(`/follow/${id}`).then(response => { return response.data })
     },
     unFollow(id: number) {
-        return axiosInstance.delete<ResponseType>(`/follow/${id}`).then(response => { return response.data })
+        return axiosInstance.delete<Promise<ResponseType>>(`/follow/${id}`).then(response => { return response.data })
     }
 }
