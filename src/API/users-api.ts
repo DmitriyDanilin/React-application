@@ -9,8 +9,9 @@ type getUsersType = {
 
 //done
 export const usersAPI = {
-    getUsers(currentPage: number, pageSize: number) {
-        return axiosInstance.get<getUsersType>(`/users?page=${currentPage}&count=${pageSize}`).then(response => { return response.data })
+    getUsers(currentPage: number, pageSize: number, term: string = "", friend: null | boolean = null) {
+        return axiosInstance.get<getUsersType>(`/users?page=${currentPage}&count=${pageSize}&term=${term}`+(friend ===null ? "": `&friend=${friend}`))
+        .then(response => { return response.data })
     },
     Follow(id: number) {
         return axiosInstance.post<Promise<ResponseType>>(`/follow/${id}`).then(response => { return response.data })
