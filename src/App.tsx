@@ -3,15 +3,15 @@ import './App.css';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar';
 import { Redirect, Route, Switch, withRouter } from "react-router-dom";
-import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
-import Login from './components/Login/Login';
+import {Login} from './components/Login/Login';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { initilizeApp } from './redux/app-reduser';
 import Preloader from './components/Preloader/Preloader';
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import { AppStateType } from './redux/redux-store';
+import {UsersPage} from './components/Users/UsersPage';
 
 type MapPropsType = ReturnType<typeof mapStateToProps>
 type DispatchPropsType = {
@@ -52,7 +52,7 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
                             render={() => <ProfileContainer />} />
 
                         <Route path='/users'
-                            render={() => <UsersContainer/>} />
+                            render={() => <UsersPage/>} />
                         <Route path='/login'
                             render={() => <Login />} />
                     </Switch>
