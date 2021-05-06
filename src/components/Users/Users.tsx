@@ -50,7 +50,7 @@ const Users: React.FC<PropsType> = React.memo(() => {
                 onChange={onPageClick} total={totalUsersCount} />}
 
             <UsersSearchForm onFilterChanged= {onFilterChanged}/>
-            {
+            { isFetching ? <Preloader/> :
                 users.map(u => <User user={u}
                     isFollowingInProgress={isFollowingInProgress}
                     follow={Follow}
