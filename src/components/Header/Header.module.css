@@ -16,16 +16,15 @@ a{
     font-size: xx-large;
     font-style: italic;
     color: lightblue;
-    margin: 0;
+    margin-left: 10px;
     position: absolute;               
-    top: 50%;                         
-    transform: translate(0, -50%)    
+
 }
 .loginBlock{
     font-style: italic;
     color: lightblue;
     float: right;
-    margin: 30px;
+    margin-right: 30px;
 }
 .login{
     font-size: x-large;

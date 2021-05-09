@@ -74,7 +74,7 @@ const Users: React.FC<PropsType> = React.memo(() => {
 
     return (
         <div>
-            { <Pagination showSizeChanger={false} pageSize={pageSize} current={currentPage}
+            { <Pagination style={{ margin: '20px' }} showSizeChanger={false} pageSize={pageSize} current={currentPage}
                 responsive={true} size="default"
                 onChange={onPageClick} total={totalUsersCount} />}
 

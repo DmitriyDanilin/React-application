@@ -2,28 +2,38 @@ import React from 'react';
 import s from './Header.module.css';
 import { NavLink } from "react-router-dom";
 import { Button, Radio } from 'antd';
-export type MapPropsType ={
-    isAuth: boolean
-    login: string | null
-}
-export type DispatchPropsType ={
-    logout: () => void
-}
+import { Header } from 'antd/lib/layout/layout';
+import { useDispatch, useSelector } from 'react-redux';
+import { GetIsAuth, GetLogin } from '../../redux/users-selectors';
+import { logout } from '../../redux/auth-reduser';
 
-const Header: React.FC<MapPropsType & DispatchPropsType> = (props) => {
-    return <header className={s.header}>
+
+
+const AppHeader: React.FC = (props) => {
+    const isAuth = useSelector(GetIsAuth)
+    const login = useSelector(GetLogin)
+    const dispatch = useDispatch()
+
+    const logoutCB =() =>{
+        dispatch(logout())
+    }
+    return <Header className="site-layout-background" style={{ padding: 0 }}>
+                  
+                    
         <NavLink to="/profile" activeClassName={s.activeLink}>
-            <img src='https://www.vectorlogo.zone/logos/telegram/telegram-tile.svg' />
+            
         </NavLink>
         <span className={s.title}>FakeTelegram</span>
-        <div className={s.loginBlock}>  {props.isAuth 
+        <div className={s.loginBlock}>  {isAuth 
         ? 
-        <div> <NavLink to="/login"><span>{props.login}</span></NavLink>  <NavLink to="/login">
-            <Button onClick={props.logout} danger ={true} type="primary">Log Out</Button>
+        <div> <NavLink to="/login"><span>{login}</span></NavLink>  <NavLink to="/login">
+            <Button onClick={logoutCB} danger ={true} type="primary">Log Out</Button>
             </NavLink></div>  
         : 
         <span className={s.login}>Log In</span>}</div>
-    </header>
+
+    </Header>
+    
 }
 
-export default Header;
+export default AppHeader;

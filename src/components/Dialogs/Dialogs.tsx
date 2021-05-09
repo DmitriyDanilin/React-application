@@ -43,7 +43,7 @@ const AddMessageForm: React.FC<InjectedFormProps<NewMessageBodyFormType>>= (prop
     return (
         <div>
             <form onSubmit={props.handleSubmit} className={s.textButtonArea}>
-                {CreateField<NewMessageBodyPropertiesType>("Message", "newMessageBody", [required, maxLenght], Input)}
+                {CreateField<NewMessageBodyPropertiesType>("Message", "newMessageBody", [ ], Input)}
                 <div><button>Send</button></div>
             </form>
         </div>
