@@ -7,7 +7,8 @@ import { GetCurrentPage, GetIsFetching, GetIsFollowingInProgress, GetPageSize, G
 import { useDispatch, useSelector } from 'react-redux'
 import { getUsers, follow, unfollow } from '../../redux/users-reducer'
 import Preloader from '../Preloader/Preloader'
-
+import { useHistory } from 'react-router-dom'
+import * as queryString from 'querystring'
 type PropsType = {
 }
 
@@ -22,11 +23,39 @@ const Users: React.FC<PropsType> = React.memo(() => {
     const isFollowingInProgress = useSelector(GetIsFollowingInProgress)
     const isFetching= useSelector(GetIsFetching)
 
+
+    const history = useHistory();
+
     const dispatch = useDispatch();
+    type QueryParamsType = {term?: string; page?: string; friend?: string}
+   
+    useEffect(() => {
+        
+        const parsed = queryString.parse(history.location.search.substr(1)) as QueryParamsType
+
+        let actualPage = currentPage
+        let actualFilter = filter 
+
+        if (!!parsed.page) actualPage = +parsed.page
+        if (!!parsed.term) actualFilter = {...actualFilter, term: parsed.term as string}
+        if (!!parsed.friend) actualFilter = {...actualFilter, friend: parsed.friend ==="null" ? null : parsed.friend === "true" ? true  : false}
+        dispatch(getUsers(actualPage, pageSize, actualFilter))
+    },[])
+
 
     useEffect(() => {
-        dispatch(getUsers(currentPage, pageSize, filter))
-    },[])
+        const query: QueryParamsType = {} 
+        if(!!filter.term) query.term = filter.term
+        if(!!filter.friend !== null) query.friend = String(filter.friend)
+        if(currentPage !== 1) query.page = String(currentPage)
+
+        history.push(
+            {
+                pathname: '/users',
+                search: queryString.stringify(query)
+            }
+        )
+    },[filter, currentPage])
 
     const onPageClick = (pageNumber: number) =>{
         dispatch(getUsers(pageNumber, pageSize, filter))
