@@ -7,6 +7,7 @@ import { connect, useDispatch, useSelector } from 'react-redux'
 import { logIn } from '../../redux/auth-reduser'
 import { Redirect } from 'react-router-dom'
 import { AppStateType } from '../../redux/redux-store'
+import { Col, Row } from 'antd'
 
 type LoginFormOwnProps = {
     captchaURL: string | null
@@ -27,9 +28,13 @@ export const Login: React.FC = () => {
     }
     return (
         <div>
-            <h1>Login</h1>
+            <Row style ={{marginTop: "30px"}}>
+                <Col span ={7}><div></div></Col>
+                <Col span ={10}><h1>Login</h1>
             <LoginReduxForm onSubmit={onSubmit}
-                captchaURL={captchaURL} />
+                captchaURL={captchaURL} /></Col>
+            <Col span ={7}><div></div></Col>
+                </Row>
         </div>
     )
 }

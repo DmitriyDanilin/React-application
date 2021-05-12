@@ -12,18 +12,16 @@ import { AppStateType } from './redux/redux-store';
 import { UsersPage } from './components/Users/UsersPage';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import {
-    DesktopOutlined,
-    PieChartOutlined,
-    FileOutlined,
     TeamOutlined,
     UserOutlined,
-    MailOutlined
+    MailOutlined,
+    WechatOutlined
 } from '@ant-design/icons';
 import AppHeader from './components/Header/Header';
-import logo from './img/Logo.jpg'
+import { ChatPage } from './pages/Chat/ChatPage';
 
-const { Header, Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu;
+const { Content, Footer, Sider } = Layout;
+
 
 type MapPropsType = ReturnType<typeof mapStateToProps>
 type DispatchPropsType = {
@@ -71,6 +69,9 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
                         <Menu.Item key="3" icon= {<TeamOutlined />}>
                             <NavLink to="/users">Users</NavLink>
                         </Menu.Item>
+                        <Menu.Item key="4" icon= {<WechatOutlined />}>
+                            <NavLink to="/chat">Chat</NavLink>
+                        </Menu.Item>
                     </Menu>
                 </Sider>
                 <Layout className="site-layout">
@@ -90,6 +91,8 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
                                 render={() => <UsersPage />} />
                             <Route path='/login'
                                 render={() => <Login />} />
+                            <Route path='/chat'
+                                render={() => <ChatPage />} />
                         </Switch>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>Fake Telegram 2021 created by Dmitriy Danilin</Footer>
