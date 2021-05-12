@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import './App.css';
 import { NavLink, Redirect, Route, Switch, withRouter } from "react-router-dom";
 import ProfileContainer from './components/Profile/ProfileContainer';
@@ -10,7 +10,7 @@ import Preloader from './components/Preloader/Preloader';
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import { AppStateType } from './redux/redux-store';
 import { UsersPage } from './components/Users/UsersPage';
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu } from 'antd';
 import {
     TeamOutlined,
     UserOutlined,
@@ -19,6 +19,8 @@ import {
 } from '@ant-design/icons';
 import AppHeader from './components/Header/Header';
 import { ChatPage } from './pages/Chat/ChatPage';
+
+//const ChatPage = React.lazy(() => import('./pages/Chat/ChatPage'));
 
 const { Content, Footer, Sider } = Layout;
 
@@ -86,13 +88,15 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
 
                             <Route path='/profile/:userID?'
                                 render={() => <ProfileContainer />} />
+                                <Route path='/React-application'
+                                render={() => <ProfileContainer />} />
 
                             <Route path='/users'
                                 render={() => <UsersPage />} />
                             <Route path='/login'
                                 render={() => <Login />} />
                             <Route path='/chat'
-                                render={() => <ChatPage />} />
+                                render={() => <ChatPage /> } />
                         </Switch>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>Fake Telegram 2021 created by Dmitriy Danilin</Footer>
