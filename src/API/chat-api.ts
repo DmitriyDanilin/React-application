@@ -1,43 +1,66 @@
 let newWS: WebSocket | null = null
+export type StatusType = 'pending' | 'ready' | 'error'
 
 const closeHandler = () => {
     console.log("WS closed")
+    subscribers['status-changed'].forEach(s => s('pending'))
     setTimeout(createChannel, 3000)
 }
+type EventType = 'message-received' | 'status-changed'
 
 const messageHandler = (e:MessageEvent) => {
     const newMesage = JSON.parse(e.data)
-    subscribers.forEach(s => s(newMesage))
+    subscribers['message-received'].forEach(s => s(newMesage))
 } 
+const openHandler = () => {
+    subscribers['status-changed'].forEach(s => s('ready'))
+} 
+
+const errorHandler = () => {
+    subscribers['status-changed'].forEach(s => s('error'))
+}
+const CleanUp = () => {
+    newWS?.removeEventListener('close', closeHandler)
+    newWS?.removeEventListener('message', messageHandler)
+    newWS?.removeEventListener('open', openHandler)
+    newWS?.removeEventListener('error', errorHandler)
+}
 
 export function createChannel() {
 
-    newWS?.removeEventListener('close', closeHandler)
+    CleanUp()
     newWS?.close()
 
     newWS = new WebSocket("wss://social-network.samuraijs.com/handlers/ChatHandler.ashx")
-
+    subscribers['status-changed'].forEach(s => s('pending'))
     newWS.addEventListener('close', closeHandler)
     newWS.addEventListener('message', messageHandler)
+    newWS.addEventListener('open', openHandler)
+    newWS.addEventListener('error', errorHandler)
 }
 
 export const chatAPI = {
-    start(){createChannel()},
+    start(){
+        createChannel()
+    },
     stop(){
-        subscribers = []
-        newWS?.removeEventListener('close', closeHandler)
-        newWS?.removeEventListener('message', messageHandler)
+        subscribers['message-received'] = []
+        subscribers['status-changed'] =[]
+        CleanUp()
         newWS?.close()
         
     },
-    subscribe(callback: (messages: MessageType[]) => void){
-        subscribers.push(callback)
+    subscribe(eventName: EventType, callback: MessageReceivedSubscriberType | StatusChangedSubscriberType | null){
+        //@ts-ignore
+        subscribers[eventName].push(callback)//wtf???
         return () =>{
-            subscribers = subscribers.filter(s => s!== callback)
+            //@ts-ignore
+            subscribers[eventName] = subscribers[eventName].filter(s => s!== callback)
         }
     },
-    unsubscribe(callback: (messages: MessageType[]) => void){
-        subscribers = subscribers.filter(s => s!== callback)
+    unsubscribe(eventName: EventType,callback: MessageReceivedSubscriberType | StatusChangedSubscriberType | null){
+        //@ts-ignore
+        subscribers[eventName] = subscribers[eventName].filter(s => s!== callback)
     },
     sendMessage(message:string) {
         newWS?.send(message)
@@ -51,6 +74,11 @@ export type MessageType = {
     userId: number
     userName: string
 }
-type SubscriberType = (messages: MessageType[]) => void
+type MessageReceivedSubscriberType = (messages: MessageType[]) => void
+type StatusChangedSubscriberType = (status: StatusType) => void
 
-let subscribers = [] as Array<SubscriberType>
+let subscribers = {
+   'message-received': [] as Array<MessageReceivedSubscriberType>,
+    'status-changed' : [] as Array<StatusChangedSubscriberType>
+
+}
