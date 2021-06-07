@@ -38,7 +38,7 @@ const Chat: React.FC = () => {
     )
 }
 
-const Messages: React.FC = () => {
+const Messages: React.FC = React.memo( () => {
     const messages = useSelector((state:AppStateType) => state.chatPage.messages)
     const messagesRef = useRef<HTMLDivElement>(null)
     const [isAutoScrollActive, setAS] = useState(false)
@@ -64,10 +64,10 @@ const Messages: React.FC = () => {
             <div ref={messagesRef}></div>
         </div>
     )
-}
+})
 
-const Message: React.FC<{ message: MessageType }> = ({ message }) => {
-
+const Message: React.FC<{ message: MessageType }> = React.memo(({ message }) => {
+    console.log("message")
     return (
         <div style={{ border: "2px double black", background: "#DDD", margin: "10px" }}>
             <div >
@@ -79,7 +79,7 @@ const Message: React.FC<{ message: MessageType }> = ({ message }) => {
             </div>
         </div>
     )
-}
+})
 const AddMessageForm: React.FC = () => {
     const [message, setMessage] = useState('')
     const status = useSelector((state: AppStateType) => state.chatPage.status)
