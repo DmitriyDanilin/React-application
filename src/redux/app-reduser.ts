@@ -6,8 +6,6 @@ export type initialStateType = {
     isInitialized: boolean
 }
 
-
-
 let initialState: initialStateType = {
     isInitialized: false
 }; 
@@ -34,7 +32,7 @@ type ActionsType = InferActionsTypes<typeof actions>
 
 type ThunkType = ThunkAction<void, AppStateType, unknown, ActionsType>
 
-export const initilizeApp = ():ThunkType  => (dispatch, getState) =>{
+export const initilizeApp = ():ThunkType  => (dispatch) =>{
     let dispatchPromise = dispatch(getAuthUserData());
 
     Promise.all([dispatchPromise]).then(()=>{

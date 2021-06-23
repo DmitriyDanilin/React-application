@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React, { Suspense } from 'react';
 import './App.css';
 import { NavLink, Redirect, Route, Switch, withRouter } from "react-router-dom";
 import ProfileContainer from './components/Profile/ProfileContainer';
@@ -15,10 +15,12 @@ import {
     TeamOutlined,
     UserOutlined,
     MailOutlined,
-    WechatOutlined
+    WechatOutlined,
+    PlayCircleOutlined
 } from '@ant-design/icons';
 import AppHeader from './components/Header/Header';
 import { ChatPage } from './pages/Chat/ChatPage';
+import { MusicPage } from './components/Music/MusicPage';
 
 //const ChatPage = React.lazy(() => import('./pages/Chat/ChatPage'));
 
@@ -68,16 +70,19 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
                         <Menu.Item key="2" icon={<MailOutlined />}>
                             <NavLink to="/dialogs">Dialogs</NavLink>
                         </Menu.Item>
-                        <Menu.Item key="3" icon= {<TeamOutlined />}>
+                        <Menu.Item key="3" icon={<TeamOutlined />}>
                             <NavLink to="/users">Users</NavLink>
                         </Menu.Item>
-                        <Menu.Item key="4" icon= {<WechatOutlined />}>
+                        <Menu.Item key="4" icon={<WechatOutlined />}>
                             <NavLink to="/chat">Chat</NavLink>
+                        </Menu.Item>
+                        <Menu.Item key="5" icon={<PlayCircleOutlined />}>
+                            <NavLink to="/music">Music</NavLink>
                         </Menu.Item>
                     </Menu>
                 </Sider>
                 <Layout className="site-layout">
-                <AppHeader />
+                    <AppHeader />
                     <Content style={{ margin: '0 16px' }}>
                         <Switch>
                             <Redirect exact from="/" to="/profile" />
@@ -88,7 +93,7 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
 
                             <Route path='/profile/:userID?'
                                 render={() => <ProfileContainer />} />
-                                <Route path='/React-application'
+                            <Route path='/React-application'
                                 render={() => <ProfileContainer />} />
 
                             <Route path='/users'
@@ -96,7 +101,9 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
                             <Route path='/login'
                                 render={() => <Login />} />
                             <Route path='/chat'
-                                render={() => <ChatPage /> } />
+                                render={() => <ChatPage />} />
+                            <Route path='/music'
+                                render={() => <MusicPage />} />
                         </Switch>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>Fake Telegram 2021 created by Dmitriy Danilin</Footer>
